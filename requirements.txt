@@ -1,0 +1,5 @@
+streamlit
+fastapi
+faiss-cpu
+numpy
+pandas
