@@ -4,7 +4,6 @@ from rag_pipeline import analyze_risk
 
 app = FastAPI()
 
-# Allow React to call FastAPI
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
