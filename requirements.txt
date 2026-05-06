@@ -1,5 +1,17 @@
-streamlit
-fastapi
-faiss-cpu
-numpy
-pandas
+1. Programming Languages
+Python
+JavaScript
+
+2. AI/ML Components
+Retrieval-Augmented Generation (RAG)
+LLM-based comparative reasoning
+Confidence fusion pipeline
+Semantic retrieval
+
+3. Libraries & Frameworks
+Streamlit
+FastAPI
+React
+FAISS
+Pandas
+NumPy
