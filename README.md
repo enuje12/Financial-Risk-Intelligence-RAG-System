@@ -77,23 +77,5 @@ This approach improves explainability and helps identify uncertainty in generate
 <img width="1920" height="1028" alt="summary" src="https://github.com/user-attachments/assets/23cc2b4f-afad-4bc9-ad61-59642d8e64d0" />
 <img width="1920" height="1028" alt="evidence" src="https://github.com/user-attachments/assets/5838ee52-131c-41d0-94c5-5d733b63c4c4" />
 
-## Tech Stack
 
-### Programming Languages
-- Python
-- JavaScript
-
-### AI/ML Components
-- Retrieval-Augmented Generation (RAG)
-- LLM-based comparative reasoning
-- Confidence fusion pipeline
-- Semantic retrieval
-
-### Libraries & Frameworks
-- Streamlit
-- FastAPI
-- React
-- FAISS
-- Pandas
-- NumPy
 
