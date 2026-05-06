@@ -1,4 +1,4 @@
-# IMPORTS # ================================ 
+# IMPORT
 import json 
 import re 
 import numpy as np 
@@ -7,14 +7,12 @@ from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer 
 from openai import OpenAI 
 
-# ================================ 
-# # GLOBAL MODELS (Loaded Once) 
-# # ================================ 
+# GLOBAL MODELS 
 embedding_model = SentenceTransformer("BAAI/bge-small-en") 
 client = OpenAI( base_url="https://openrouter.ai/api/v1", 
-api_key="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" ) 
+api_key="api_key" ) 
 
-# ================================ # HELPER FUNCTIONS # ================================ 
+# HELPER FUNCTIONS 
 def clean_full_html(raw_html): 
     soup = BeautifulSoup(raw_html, "html.parser") 
     text = soup.get_text(separator=" ") 
@@ -75,13 +73,12 @@ def query_llm(prompt, max_tokens=300):
     return completion.choices[0].message.content 
 
 def clean_json_output(text):
-    # Remove markdown fences
+  
     text = re.sub(r"```json", "", text)
     text = re.sub(r"```", "", text)
 
     text = text.strip()
 
-    # Extract first JSON object
     match = re.search(r"\{.*\}", text, re.DOTALL)
     if match:
         return match.group(0)
@@ -90,18 +87,18 @@ def clean_json_output(text):
 
 def analyze_risk(file_2022_path, file_2023_path):
 
-    # 1️⃣ Load files
+    # Load 
     with open("msft_2023.html", "r", encoding="utf-8") as f:
         raw_2023 = f.read()
 
     with open("msft_2022.html", "r", encoding="utf-8") as f:
         raw_2022 = f.read()
 
-    # 2️⃣ Clean
+    # Clean
     full_2023 = clean_full_html(raw_2023)
     full_2022 = clean_full_html(raw_2022)
 
-    # 3️⃣ Extract sections
+    # Extract
     risk_2023 = extract_real_section(full_2023, "Item 1A.", "Item 1B.")
     risk_2022 = extract_real_section(full_2022, "Item 1A.", "Item 1B.")
 
@@ -111,15 +108,15 @@ def analyze_risk(file_2022_path, file_2023_path):
     text_2023 = risk_2023 + " " + mda_2023
     text_2022 = risk_2022 + " " + mda_2022
 
-    # 4️⃣ Chunk
+    # Chunk
     chunks_2023 = chunk_text(text_2023)
     chunks_2022 = chunk_text(text_2022)
 
-    # 5️⃣ Embed
+    # Embed
     embeddings_2023 = embed_texts(chunks_2023)
     embeddings_2022 = embed_texts(chunks_2022)
 
-    # 6️⃣ FAISS
+    # FAISS
     dim = embeddings_2023.shape[1]
 
     index_2023 = faiss.IndexFlatIP(dim)
@@ -128,7 +125,7 @@ def analyze_risk(file_2022_path, file_2023_path):
     index_2022 = faiss.IndexFlatIP(dim)
     index_2022.add(embeddings_2022)
 
-    # 7️⃣ Retrieve
+    # Retrieve
     query = "Analyze key financial and liquidity risks."
 
     results_2023 = retrieve(query, index_2023, chunks_2023)
@@ -137,7 +134,7 @@ def analyze_risk(file_2022_path, file_2023_path):
     context_2023 = build_context(results_2023)
     context_2022 = build_context(results_2022)
 
-    # 8️⃣ Summarize
+    # Summarize
     summary_2023 = query_llm(
         f"Summarize financial and liquidity risks in concise bullet points:\n\n{context_2023}",
         200
@@ -148,7 +145,7 @@ def analyze_risk(file_2022_path, file_2023_path):
         200
     )
 
-    # 9️⃣ Compare
+    # Compare
     comparison_prompt = f"""
 You are a financial risk comparison engine.
 
@@ -180,7 +177,6 @@ Return STRICT JSON ONLY in EXACTLY this format:
     except:
         parsed_output = {}
 
-    # Enforce required keys
     parsed_output.setdefault("risk_level_change", "Unknown")
     parsed_output.setdefault("new_risks_detected", [])
     parsed_output.setdefault("worsening_indicators", [])
@@ -188,7 +184,7 @@ Return STRICT JSON ONLY in EXACTLY this format:
     parsed_output.setdefault("summary", "Model output incomplete.")
     parsed_output.setdefault("confidence_estimate", 0.4)
 
-    # 🔟 Confidence fusion
+    # Confidence fusion
     avg_score = (results_2023[0]["score"] + results_2022[0]["score"]) / 2
     retrieval_conf = round(avg_score, 3)
 
