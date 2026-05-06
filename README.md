@@ -72,10 +72,10 @@ This approach improves explainability and helps identify uncertainty in generate
 
 ### Screenshots
 
-<img width="1920" height="1028" alt="evidence" src="https://github.com/user-attachments/assets/5838ee52-131c-41d0-94c5-5d733b63c4c4" />
-<img width="1920" height="1028" alt="summary" src="https://github.com/user-attachments/assets/23cc2b4f-afad-4bc9-ad61-59642d8e64d0" />
-<img width="1920" height="1031" alt="risk_analysis" src="https://github.com/user-attachments/assets/265c8862-3224-4cfc-8159-a1016ba319ab" />
 <img width="1920" height="1031" alt="dashboard" src="https://github.com/user-attachments/assets/535d3baf-8eec-4802-850b-6f84eedee72e" />
+<img width="1920" height="1031" alt="risk_analysis" src="https://github.com/user-attachments/assets/265c8862-3224-4cfc-8159-a1016ba319ab" />
+<img width="1920" height="1028" alt="summary" src="https://github.com/user-attachments/assets/23cc2b4f-afad-4bc9-ad61-59642d8e64d0" />
+<img width="1920" height="1028" alt="evidence" src="https://github.com/user-attachments/assets/5838ee52-131c-41d0-94c5-5d733b63c4c4" />
 
 ## Tech Stack
 
